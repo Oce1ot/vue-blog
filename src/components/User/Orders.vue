@@ -7,7 +7,10 @@
           <v-subheader>Hangout notifications</v-subheader>
           <v-list-tile avatar v-for="order in orders" :key="order.id">
             <v-list-tile-action>
-              <v-checkbox :input-value="order.done" @change="markDone(order)" color="success"></v-checkbox>
+            <v-checkbox
+              :input-value="order.done"
+              @change="markDone(order)"
+              color="success"></v-checkbox>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>{{order.name}}</v-list-tile-title>
@@ -33,16 +36,16 @@ export default {
           name: 'Vlados',
           phone: '89219877232',
           adId: '123',
-          done: false
-        }
+          done: false,
+        },
       ],
-      markDown: false
-    }
+      markDown: false,
+    };
   },
   methods: {
     markDone(order) {
-      order.done = true
-    }
-  }
-}
+      order.done = true;
+    },
+  },
+};
 </script>

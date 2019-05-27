@@ -52,20 +52,27 @@ export default {
       email: '',
       password: '',
       valid: false,
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid'
-      ],
+      emailRules: [v => !!v || 'E-mail is required', v => /.+@.+/.test(v) || 'E-mail must be valid'],
       passwordRules: [
         v => !!v || 'Password is required',
-        v => (v && v.length <= 6) || 'Password must be less than 6 characters'
-      ]
-    }
+        v => (v && v.length <= 6) || 'Password must be less than 6 characters',
+      ],
+    };
   },
   methods: {
     onSubmit() {
-      // console.log(this.email);
-    }
-  }
-}
+      if (this.$refs.form.validate()) {
+        const user = {
+          email: this.email,
+          password: this.password,
+        };
+
+        this.$store.dispatch('loginUser', user)
+          .then(() => this.$router.push('/'));
+      } else {
+        // console.log('user log err');
+      }
+    },
+  },
+};
 </script>
