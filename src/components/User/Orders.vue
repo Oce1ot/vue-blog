@@ -1,7 +1,14 @@
 <template>
   <v-container>
     <v-layout row>
-      <v-flex xs12 sm6 offset-sm3>
+      <v-flex xs12 class="text-xs-center" v-if="loading">
+        <v-progress-circular
+        :size="50"
+        color="primary"
+        indeterminate
+        ></v-progress-circular>
+      </v-flex>
+      <v-flex xs12 sm6 offset-sm3 v-else-if="!loading && orders.length !== 0">
         <h1 class="text--secondary mb3">Orders</h1>
         <v-list subheader two-line>
           <v-subheader>Hangout notifications</v-subheader>
@@ -22,30 +29,37 @@
           </v-list-tile>
         </v-list>
       </v-flex>
+          <v-flex xs12 class="text-xs-center" v-else>
+            <h1>you have not orders</h1>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      orders: [
-        {
-          id: 'fdi3',
-          name: 'Vlados',
-          phone: '89219877232',
-          adId: '123',
-          done: false,
-        },
-      ],
-      markDown: false,
-    };
-  },
-  methods: {
-    markDone(order) {
-      order.done = true;
+    data() {
+        return {
+            markDown: false
+        };
     },
-  },
+    methods: {
+        markDone(order) {
+            this.$store.dispatch("markOrderDone", order.id).then(() => {
+                order.done = true;
+            });
+        }
+    },
+    created() {
+        this.$store.dispatch("fetchOrders");
+    },
+    computed: {
+        loading() {
+            return this.$store.getters.loading;
+        },
+        orders() {
+            return this.$store.getters.orders;
+        }
+    }
 };
 </script>

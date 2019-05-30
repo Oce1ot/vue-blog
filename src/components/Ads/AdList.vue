@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-layout row>
+        <v-layout row v-if="!loading && myAds.length !== 0">
             <v-flex xs12 sm6 offset-sm3>
                 <h1>adlist</h1>
                 <v-card elevation-10 mb5
@@ -9,11 +9,11 @@
                 >
                     <v-layout row>
                         <v-flex xs4>
-                            <v-card-media
+                            <v-img
                               :src="ad.imageSrc"
                               height="150px"
                             >
-                            </v-card-media>
+                            </v-img>
                         </v-flex>
                         <v-flex xs8>
                             <v-card-text>
@@ -29,15 +29,32 @@
                 </v-card>
             </v-flex>
         </v-layout>
+        <v-layout v-else-if="!loading && myAds.length === 0">
+            <v-flex xs12 class="text-xs-center">
+                 <h1>You have no ads</h1>
+            </v-flex>
+        </v-layout>
+        <v-layout v-else>
+            <v-flex xs12 class="text-xs-center">
+                <v-progress-circular
+                :size="50"
+                color="primary"
+                indeterminate
+                ></v-progress-circular>
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
 <script>
 export default {
-  computed: {
-    myAds() {
-      return this.$store.getters.myAds;
-    },
-  },
+    computed: {
+        myAds() {
+            return this.$store.getters.myAds;
+        },
+        loading() {
+            return this.$store.getters.loading;
+        }
+    }
 };
 </script>

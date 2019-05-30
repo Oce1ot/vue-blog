@@ -37,7 +37,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="onSubmit" :disabled="!valid">Login</v-btn>
+            <v-btn color="primary" @click="onSubmit" :loading="loading" :disabled="!valid || loading">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -74,5 +74,10 @@ export default {
       }
     },
   },
+  computed: {
+    loading() {
+      return this.$store.getters.loading
+    }
+  }
 };
 </script>

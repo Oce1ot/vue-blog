@@ -1,0 +1,19 @@
+{
+    "parserOptions": {
+        "parser": "babel-eslint",
+        "ecmaVersion": 6
+    },
+    "extends": ["plugin:vue/base"],
+    "rules": {
+        "comma-dangle": [
+            "error",
+            {
+                "arrays": "never",
+                "objects": "never",
+                "imports": "never",
+                "exports": "never",
+                "functions": "ignore"
+            }
+        ]
+    }
+}
